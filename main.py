@@ -5,13 +5,18 @@ import pandas as pd
 app = Flask(__name__)
 
 stations = pd.read_csv("data_small/stations.txt", skiprows=17)
-stations["STANAME"] = stations["STANAME                                 "]
-stations = stations[["STAID", "STANAME"]]
+stations["STATION_NAME"] = stations["STANAME                                 "]
+stations["STATION_ID"] = stations["STAID"]
+stations = stations[["STATION_ID", "STATION_NAME"]]
 
 
 @app.route("/")
 def home():
-    return render_template("/home.html", data=stations.to_html())
+    station_html = stations.to_html(index=False).replace(
+        '<tr style="text-align: right;">', '<tr style="text-align: left;">'
+    )
+    print(station_html[:200])
+    return render_template("/home.html", data=station_html)
 
 
 @app.route("/api/v1/<station>/<date>/")
@@ -28,4 +33,4 @@ def about(station, date):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
