@@ -1,7 +1,8 @@
 from flask import Flask, render_template
 from datetime import datetime
+import pandas as pd
 
-app = Flask("Website")
+app = Flask(__name__)
 
 
 @app.route("/")
@@ -11,9 +12,16 @@ def home():
 
 @app.route("/api/v1/<station>/<date>/")
 def about(station, date):
+    df = pd.read_csv(
+        f"data_small/TG_STAID{station.zfill(6)}.txt",
+        skiprows=20,
+        parse_dates=["    DATE"],
+    )
+    print(df[:10])
     date = datetime.strptime(date, "%Y%m%d")
-    print(date)
-    return {"Station": station, "Date": date.strftime("%b %d, %Y"), "temperature": 16}
+    temp = df.loc[df["    DATE"] == date]["   TG"].squeeze() / 10  # type: ignore
+    return {"Station": station, "Date": date.strftime("%b %d, %Y"), "temperature": temp}
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
