@@ -63,7 +63,7 @@ def sta_yearly(station, year):
         parse_dates=["    DATE"],
     )
     # Filter data for the requested year
-    yearly = df[df["    DATE"].dt.year == int(year)]
+    yearly = df.loc[df["    DATE"].dt.year == int(year)]
     # Convert filtered data to dictionary format and return
     return yearly.to_dict(orient="records")
 
