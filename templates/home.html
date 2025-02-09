@@ -8,10 +8,10 @@
   </head>
   <body>
     <h1>Weather Data API</h1>
-    <p>URL format: http://127.0.0.1:5000/api/v1/station_id/date/</p>
-    <p>URL format: http://127.0.0.1:5000/api/v1/station_id/</p>
-    <p>URL format: http://127.0.0.1:5000/api/v1/yearly/station_id/date/</p>
-    <p>URL example: http://127.0.0.1:5000/api/v1/10/20241202/</p>
+    <p>URL format: http://127.0.0.1:{{port}}/api/v1/station_id/date/</p>
+    <p>URL format: http://127.0.0.1:{{port}}/api/v1/station_id/</p>
+    <p>URL format: http://127.0.0.1:{{port}}/api/v1/yearly/station_id/date/</p>
+    <p>URL example: http://127.0.0.1:{{port}}/api/v1/10/20241202/</p>
     <p>See station names below:</p>
     {{data | safe}}
   </body>

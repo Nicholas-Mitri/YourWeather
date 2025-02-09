@@ -3,6 +3,7 @@ from datetime import datetime
 import pandas as pd
 
 app = Flask(__name__)
+port = 5001
 
 
 @app.route("/")
@@ -21,7 +22,7 @@ def home():
     station_html = stations.to_html(index=False).replace(
         '<tr style="text-align: right;">', '<tr style="text-align: left;">'
     )
-    return render_template("/home.html", data=station_html)
+    return render_template("/home.html", data=station_html, port=port)
 
 
 @app.route("/api/v1/<station>/<date>/")
@@ -68,4 +69,4 @@ def sta_yearly(station, year):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=port)
